@@ -64,15 +64,3 @@ API Server memberikan layanan-layanan berikut:
       2. http://localhost:8000/jobs/{job_id}
       3. http://localhost:8000/jobs/search?title=Programmer
 
-## Struktur Direktori
-
-jobs-scraper-backend/
-│
-├── main.py                # File utama yang menjalankan aplikasi FastAPI
-├── requirements.txt       # Daftar dependensi Python
-├── README.md              # Dokumentasi proyek
-├── .env                   # Konfigurasi environment (opsional)
-│
-└───scraper/               # Direktori untuk job scraper
-    ├── scraper.py         # Script untuk scraping data lowongan pekerjaan
-    └── utils.py           # Utilitas tambahan untuk scraper
