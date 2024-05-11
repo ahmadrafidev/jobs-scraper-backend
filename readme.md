@@ -47,16 +47,16 @@ API Server memberikan layanan-layanan berikut:
    ```
 
 2. Instalasi Dependensi
-```
-pipenv install
-pipenv shell
-pip install fastapi uvicorn pymongo pydantic
-```
+  ```
+  pipenv install
+  pipenv shell
+  pip install fastapi uvicorn pymongo pydantic
+  ```
 
 3. Menjalankan Aplikasi 
-```
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
+  ```
+  uvicorn main:app --reload --host 0.0.0.0 --port 8000
+  ```
 
 4. Mengakses API
    1. Buka browser atau mengakses tools seperti `curl` atau `Postman` untuk mengakses endpoint:
