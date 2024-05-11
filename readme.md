@@ -42,7 +42,7 @@ API Server memberikan layanan-layanan berikut:
 
 1. **Clone Repository:**
    ```sh
-   git clone https://github.com/username/jobs-scraper-backend.git
+   git clone https://github.com/ahmadrafidev/jobs-scraper-backend.git
    cd jobs-scraper-backend
    ```
 
