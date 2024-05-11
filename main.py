@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from pymongo import MongoClient
 from pydantic import BaseModel
 from typing import List, Optional
@@ -40,16 +40,20 @@ def get_jobs():
 
 @app.get("/jobs/{job_id}", response_model=Job)
 def get_job(job_id: str):
-    job = collection.find_one({"_id": ObjectId(job_id)})
+    try:
+        job = collection.find_one({"_id": ObjectId(job_id)})
+    except:
+        raise HTTPException(status_code=404, detail="Invalid job ID")
+    
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
     return job
 
 @app.get("/jobs/search", response_model=List[Job])
 def search_jobs(
-    title: Optional[str] = None,
-    company: Optional[str] = None,
-    location: Optional[str] = None,
+    title: Optional[str] = Query(None, min_length=1),
+    company: Optional[str] = Query(None, min_length=1),
+    location: Optional[str] = Query(None, min_length=1),
     start_date: Optional[datetime] = None,
     end_date: Optional[datetime] = None
 ):
