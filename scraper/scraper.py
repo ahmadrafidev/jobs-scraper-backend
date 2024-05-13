@@ -8,9 +8,11 @@ client = MongoClient('mongodb://localhost:27017/')
 db = client['job_scraper']
 collection = db['jobs']
 
-# Function to scrape job listings from jobstreet.co.id
-def scrape_jobstreet():
-    url = "https://www.jobstreet.co.id/en/job-search/job-vacancy.php?ojs=10&key=programmer"  # URL to scrape
+# Keywords to search for
+keywords = ["programmer", "data", "network", "cyber security"]
+
+def scrape_jobstreet(keyword):
+    url = f"https://www.jobstreet.co.id/en/job-search/job-vacancy.php?ojs=10&key={keyword}"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -31,15 +33,15 @@ def scrape_jobstreet():
             'date_posted': date_posted,
             'source': 'jobstreet.co.id',
             'job_link': job_link,
-            'scrape_date': datetime.now()
+            'scrape_date': datetime.now(),
+            'keyword': keyword
         }
 
         collection.update_one({'job_link': job_link}, {'$set': job_data}, upsert=True)
-        print(f"Inserted/Updated job: {title} at {company}")
+        print(f"Inserted/Updated job: {title} at {company} for keyword: {keyword}")
 
-# Function to scrape job listings from karir.com
-def scrape_karir():
-    url = "https://www.karir.com/search/jobs?keywords=programmer"  # URL to scrape
+def scrape_karir(keyword):
+    url = f"https://karir.com/search-lowongan?keyword={keyword}"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -60,15 +62,15 @@ def scrape_karir():
             'date_posted': date_posted,
             'source': 'karir.com',
             'job_link': job_link,
-            'scrape_date': datetime.now()
+            'scrape_date': datetime.now(),
+            'keyword': keyword
         }
 
         collection.update_one({'job_link': job_link}, {'$set': job_data}, upsert=True)
-        print(f"Inserted/Updated job: {title} at {company}")
+        print(f"Inserted/Updated job: {title} at {company} for keyword: {keyword}")
 
-# Function to scrape job listings from kalibrr.com
-def scrape_kalibrr():
-    url = "https://www.kalibrr.com/job-board/te/job-openings?keywords=programmer"  # URL to scrape
+def scrape_kalibrr(keyword):
+    url = f"https://www.kalibrr.com/job-board/te/job-openings?keywords={keyword}"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -89,18 +91,18 @@ def scrape_kalibrr():
             'date_posted': date_posted,
             'source': 'kalibrr.com',
             'job_link': job_link,
-            'scrape_date': datetime.now()
+            'scrape_date': datetime.now(),
+            'keyword': keyword
         }
 
         collection.update_one({'job_link': job_link}, {'$set': job_data}, upsert=True)
-        print(f"Inserted/Updated job: {title} at {company}")
+        print(f"Inserted/Updated job: {title} at {company} for keyword: {keyword}")
 
-# Function to scrape job listings from linkedin.com
-def scrape_linkedin():
+def scrape_linkedin(keyword):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     }
-    url = "https://www.linkedin.com/jobs/search?keywords=programmer"  # URL to scrape
+    url = f"https://www.linkedin.com/jobs/search?keywords={keyword}"
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -121,14 +123,16 @@ def scrape_linkedin():
             'date_posted': date_posted,
             'source': 'linkedin.com',
             'job_link': job_link,
-            'scrape_date': datetime.now()
+            'scrape_date': datetime.now(),
+            'keyword': keyword
         }
 
         collection.update_one({'job_link': job_link}, {'$set': job_data}, upsert=True)
-        print(f"Inserted/Updated job: {title} at {company}")
+        print(f"Inserted/Updated job: {title} at {company} for keyword: {keyword}")
 
 if __name__ == "__main__":
-    scrape_jobstreet()
-    scrape_karir()
-    scrape_kalibrr()
-    scrape_linkedin()
+    for keyword in keywords:
+        scrape_jobstreet(keyword)
+        scrape_karir(keyword)
+        scrape_kalibrr(keyword)
+        scrape_linkedin(keyword)
