@@ -64,3 +64,7 @@ API Server memberikan layanan-layanan berikut:
       2. http://localhost:8000/jobs/{job_id}
       3. http://localhost:8000/jobs/search?title=Programmer
 
+**Note**: 
+
+1. Service web client yang menghandle interaksi pengguna lewat website dapat diakses melalui repository: [Jobs Scraper Website](https://github.com/ahmadrafidev/jobs-scraper-web)
+2. Service mobile client yang menghandle interaksi pengguna lewat aplikasi mobile dapat diakses melalui repository: [Jobs Scraper Mobile](https://github.com/ahmadrafidev/jobs-scraper-mobile)
