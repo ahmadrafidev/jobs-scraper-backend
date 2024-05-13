@@ -12,8 +12,8 @@ Repository ini adalah bagian backend untuk proyek Jobs Scraper yang dibangun men
 - **Database:**
   - MongoDB: Database NoSQL untuk menyimpan data lowongan pekerjaan yang dikumpulkan oleh scraper.
 - **Client-side Technologies:**
-  - NextJS: Framework untuk mengembangkan aplikasi web klien.
-  - React Native (Expo): Framework untuk mengembangkan aplikasi mobile yang bisa berjalan di Android dan iOS.
+  - **Web client framework:** NextJS 
+  - **Mobile client framework:** React Native (Expo)
 - **Hosting/Deployment:**
   - Vercel, GCP, atau AWS: Platform untuk hosting aplikasi dan API, dipilih berdasarkan kemudahan deployment, keandalan, dan fitur.
 
