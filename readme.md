@@ -1,44 +1,44 @@
 # Jobs Scraper Backend
 
-Repository ini adalah bagian backend untuk proyek Jobs Scraper yang dibangun menggunakan FastAPI dan MongoDB untuk menyediakan layanan API yang mengakses data lowongan pekerjaan dari beberapa situs web terkemuka di Indonesia.
+This repository is the backend for the Jobs Scraper project which was built using FastAPI and MongoDB to provide API services that access job vacancy data from several leading websites in Indonesia.
 
-## Teknologi yang Digunakan
+## Technology Used
 
-- **Bahasa Pemrograman:**
-  - Python: Digunakan untuk pengembangan job scraper dan API server.
-  - JavaScript/TypeScript: Digunakan untuk mengembangkan aplikasi klien (web dan mobile).
-- **Framework Backend:**
-  - FastAPI: Framework untuk membangun API backend yang cepat dan mudah digunakan.
+- **Programming language:**
+   - Python: Used for job scraper and API server development.
+   - JavaScript/TypeScript: Used to develop client applications (web and mobile).
+- **Backend Framework:**
+   - FastAPI: A framework for building fast and easy-to-use backend APIs.
 - **Database:**
-  - MongoDB: Database NoSQL untuk menyimpan data lowongan pekerjaan yang dikumpulkan oleh scraper.
+   - MongoDB: NoSQL database for storing job vacancy data collected by the scraper.
 - **Client-side Technologies:**
-  - **Web client framework:** NextJS 
-  - **Mobile client framework:** React Native (Expo)
+   - **Web client framework:** NextJS
+   - **Mobile client framework:** React Native (Expo)
 - **Hosting/Deployment:**
-  - Vercel, GCP, atau AWS: Platform untuk hosting aplikasi dan API, dipilih berdasarkan kemudahan deployment, keandalan, dan fitur.
+   - Vercel, GCP, or AWS: Platforms for hosting applications and APIs, selected based on ease of deployment, reliability, and features.
 
 ## API Endpoints
 
-API Server memberikan layanan-layanan berikut:
+API Server provides the following services:
 
-1. **Informasi Lowongan dari Semua Jenis Pekerjaan:**
+1. **Vacancy Information for All Types of Jobs:**
    - Endpoint: `GET /jobs`
-   - Mengambil semua data lowongan pekerjaan dari MongoDB.
+   - Retrieves all job vacancy data from MongoDB.
 
-2. **Informasi Lowongan Berdasarkan Filter:**
-   - Endpoint: `GET /jobs/search`
-   - Mengambil data lowongan pekerjaan berdasarkan filter seperti `title`, `company`, `location`, `start_date`, dan `end_date`.
-   - Contoh query:
-     - `/jobs/search?title=Programmer`
-     - `/jobs/search?company=IBM`
-     - `/jobs/search?location=Jakarta`
-     - `/jobs/search?start_date=2023-01-01&end_date=2023-12-31`
+2. **Vacancy Information Based on Filter:**
+ - Endpoint: `GET /jobs/search`
+ - Retrieve job vacancy data based on filters such as `title`, `company`, `location`, `start_date`, and `end_date`.
+ - Example query:
+   - `/jobs/search?title=Programmer`
+   - `/jobs/search?company=IBM`
+   - `/jobs/search?location=Jakarta`
+   - `/jobs/search?start_date=2023-01-01&end_date=2023-12-31`
 
-3. **Informasi Lowongan Berdasarkan ID:**
+3. **Vacancy Information Based on ID:**
    - Endpoint: `GET /jobs/{job_id}`
-   - Mengambil data lowongan pekerjaan berdasarkan `job_id`.
+   - Retrieve job vacancy data based on `job_id`.
 
-## Instalasi dan Menjalankan Aplikasi
+## Installing and Running Applications
 
 1. **Clone Repository:**
    ```sh
@@ -46,25 +46,25 @@ API Server memberikan layanan-layanan berikut:
    cd jobs-scraper-backend
    ```
 
-2. Instalasi Dependensi
+2.Dependency Installation
   ```
   pipenv install
   pipenv shell
   pip install fastapi uvicorn pymongo pydantic
   ```
 
-3. Menjalankan Aplikasi 
+3. Running the application 
   ```
   uvicorn main:app --reload --host 0.0.0.0 --port 8000
   ```
 
-4. Mengakses API
-   1. Buka browser atau mengakses tools seperti `curl` atau `Postman` untuk mengakses endpoint:
+4. Accessing the API
+   1. Open a browser or access a tool such as `curl` or `Postman` to access the endpoint:
       1. http://localhost:8000/jobs
       2. http://localhost:8000/jobs/{job_id}
       3. http://localhost:8000/jobs/search?title=Programmer
 
 **Note**: 
 
-1. Service web client yang menghandle interaksi pengguna lewat website dapat diakses melalui repository: [Jobs Scraper Website](https://github.com/ahmadrafidev/jobs-scraper-web)
-2. Service mobile client yang menghandle interaksi pengguna lewat aplikasi mobile dapat diakses melalui repository: [Jobs Scraper Mobile](https://github.com/ahmadrafidev/jobs-scraper-mobile)
+1. The web client service that handles user interaction via the website can be accessed via the repository: [Jobs Scraper Website](https://github.com/ahmadrafidev/jobs-scraper-web)
+2. Mobile client services that handle user interactions via mobile applications can be accessed through the repository: [Jobs Scraper Mobile](https://github.com/ahmadrafidev/jobs-scraper-mobile)
