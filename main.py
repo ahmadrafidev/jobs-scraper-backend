@@ -4,7 +4,7 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from bson import ObjectId
-from scraper.scraper import scrape_jobstreet, scrape_karir, scrape_kalibrr, scrape_linkedin, keywords_urls
+from scraper.scraper import scrape_jobstreet, scrape_karir, scrape_kalibrr
 
 # Setup MongoDB connection
 client = MongoClient('mongodb://localhost:27017/')
