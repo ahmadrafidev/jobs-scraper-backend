@@ -4,7 +4,8 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from bson import ObjectId
-from scraper.scraper import scrape_jobstreet, scrape_karir, scrape_kalibrr
+from scrape_jobstreet import scrape_all_jobs as scrape_jobstreet_all_jobs
+from scrape_kalibrr import scrape_all_jobs as scrape_kalibrr_all_jobs
 
 # Setup MongoDB connection
 client = MongoClient('mongodb://localhost:27017/')
@@ -33,7 +34,46 @@ class Job(BaseModel):
         }
 
 # Keywords to search for
-keywords = ["programmer", "data", "network", "cyber security"]
+keywords_urls = {
+    "programmer": [
+        'https://www.jobstreet.co.id/id/programmer-jobs',
+        'https://www.kalibrr.com/home/te/programmer'
+    ],
+    "data": [
+        'https://www.jobstreet.co.id/id/data-jobs',
+        'https://www.kalibrr.com/home/te/data'
+    ],
+    "network": [
+        'https://www.jobstreet.co.id/id/network-jobs',
+        'https://www.kalibrr.com/home/te/network'
+    ],
+    "cyber security": [
+        'https://www.jobstreet.co.id/id/cyber-security-jobs',
+        'https://www.kalibrr.com/home/te/cyber-security'
+    ]
+}
+
+async def scrape_and_store(url, keyword, source):
+    if source == "JobStreet":
+        jobs = await scrape_jobstreet_all_jobs([url])
+    elif source == "Kalibrr":
+        jobs = await scrape_kalibrr_all_jobs([url])
+    
+    # Store jobs in MongoDB
+    for job in jobs:
+        job['keyword'] = keyword
+        job['date_posted'] = datetime.now()
+        collection.insert_one(job)
+
+@app.post("/scrape")
+def trigger_scrape(background_tasks: BackgroundTasks):
+    for keyword, urls in keywords_urls.items():
+        for url in urls:
+            if "jobstreet" in url:
+                background_tasks.add_task(scrape_and_store, url, keyword, "JobStreet")
+            elif "kalibrr" in url:
+                background_tasks.add_task(scrape_and_store, url, keyword, "Kalibrr")
+    return {"message": "Scraping tasks have been initiated"}
 
 @app.get("/jobs", response_model=List[Job])
 def get_jobs():
@@ -91,14 +131,6 @@ def search_jobs(
         job["_id"] = str(job["_id"])
     
     return jobs
-
-@app.post("/scrape")
-def trigger_scrape(background_tasks: BackgroundTasks):
-    for keyword, url in keywords_urls.items():
-        background_tasks.add_task(scrape_jobstreet, url, keyword)
-        background_tasks.add_task(scrape_karir, keyword)
-        background_tasks.add_task(scrape_kalibrr, keyword)
-    return {"message": "Scraping tasks have been initiated"}
 
 if __name__ == "__main__":
     import uvicorn
